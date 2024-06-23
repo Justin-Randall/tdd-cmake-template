@@ -1,6 +1,6 @@
 # Practical Test-Driven Development (TDD) in C++ with CMake
 
-I am going to break from some of the eclectic bag of tricks to talk about making a (hopefully) helpful template for creating a TDD template for C++ code using CMake and Google Test. Yes, I know, it's like discussing the joy of flossing, but bear with me. CMake, its built-in test targets and even dependency management is now as mature as a fine wine (or not so fine cheese).
+I am going to break from some of the eclectic bag of tricks to talk about making a (hopefully) helpful template for creating a TDD template for C++ code using [CMake](https://cmake.org/) and [Google Test](https://github.com/google/googletest). Yes, I know, it's like discussing the joy of flossing, but bear with me. CMake, its built-in test targets and even dependency management is now as mature as a fine wine (or not so fine cheese).
 
 ## TDD Fundamentals (Review)
 
@@ -8,7 +8,7 @@ For those unfamiliar with test-driven development, the flow is: you write a test
 
 There is plenty of great literature on why this really helps focus work and thought on what it is you want to build, but let's assume you are a fan of TDD, but in C++. It is a an exercise in more re-search (hahah, pardon the pun) to set it up each time.
 
-## Intial Setup
+## Initial Setup
 
 It is nice to have the simplest of TDD projects to use as a cut-and-waste starting point. For CMake-based projects, it is pretty much:
 
@@ -73,7 +73,7 @@ set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
 project(tdd_template LANGUAGES CXX)
 ```
 
-This may seem pedantic, it perhaps it is. If the code/library you are writing targets older standards, then by all means adjust as needed. I *highly* recommend warnings as errors and try to either provide up-stream fixes if your dependencies generate warnings, or selectively disable them for 3rd party code and be very suspect of it.
+This may seem pedantic, and perhaps it is. If the code/library you are writing targets older standards, then by all means adjust as needed. I *highly* recommend warnings as errors and try to either provide up-stream fixes if your dependencies generate warnings, or selectively disable them for 3rd party code and be very suspect of it.
 
 Lastly, the project name is what you will likely be changing when cutting and pasting. Otherwise this CMakeLists.txt is fine.
 
@@ -103,13 +103,13 @@ include_directories("${gtest_SOURCE_DIR}/include"
 add_subdirectory(tests)
 ```
 
-The testing magick is here. FetchContent is super-helpful. This will let you grab Google Test a version you specify in tests/CMakeLists.txt. CMake defines as well as required include directories are available from this point. Your top-level project is ready to run tests from the `tests` subdirectory, but that directory needs a couple of files before it is ready to go.
+The testing magick is here. FetchContent is super-helpful. This will let you grab Google Test at version you specify in tests/CMakeLists.txt. CMake defines as well as required include directories are available from this point. Your top-level project is ready to run tests from the `tests` subdirectory, but that directory needs a couple of files before it is ready to go.
 
 ## project_root/tests
 
 The project_root/CMakeLists.txt had `add_subdirectory(tests)`, so if the subdir does not exist and does not have a CMakeLists.txt, the build will fail before even creating makefiles or project files. There are two important files here: `CMakeLists.txt` and the source file for the test template. One other customation you need to make is using the project name for the source file. Since the project name here is `tdd_template`, then `test_tdd_template.cpp` will be the source file name (as we shall see from the `project_root/CMakeLists.txt` file we are about to create).
 
-Here is `project_root/CMakeLists.txt`:
+Here is `project_root/tests/CMakeLists.txt`:
 
 ```scss
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
@@ -138,7 +138,7 @@ set(TEST_COMMAND_LINE_OPTIONS ${CMAKE_CTEST_COMMAND} -C $<CONFIGURATION> -R "^${
 
 ```
 
-Lastly, the test program needs to be build from test program sources. `tests/CMakeLists.txt` says that the unit test is built from source files, and the only source file so far is `test_${PROJECT_NAME}.cpp`. `PROJECT_NAME` is defined as `tdd_template` so the source file is `test_tdd_template.cpp`.
+Lastly, the test program needs to be built from test program sources. `tests/CMakeLists.txt` says that the unit test is built from source files, and the only source file so far is `test_${PROJECT_NAME}.cpp`. `PROJECT_NAME` is defined as `tdd_template` so the source file is `test_tdd_template.cpp`.
 
 Since the core of TDD is that the test should FAIL until functionality is implemented, let's write `test_tdd_template.cpp` such that it compiles, but fails right away. From this point, you can start to implement your tests and are ready to roll with C++ test-drivent development using CMake:
 
@@ -154,7 +154,7 @@ TEST(TDDTemplate, test1) { EXPECT_EQ(1, 0); }
 
 This is now a project with a test framework that could become a header-only distribution, a compiled and linked library or a standalone program.
 
-For Visual Studio Code users, I do recommend adding a launch.json target to debug the test. Whether it is gdb (linux), cppvsdebug (MSVC on Windows) or others, the launch program for the target is this lineL
+For Visual Studio Code users, I do recommend adding a launch.json target to debug the test. Whether it is gdb (linux), cppvsdebug (MSVC on Windows) or others, the launch program for the target is this line:
 
 ```json
             "program": "${workspaceFolder}/build/tests/Debug/tdd_template_tests.exe", # .exe for windows devs
