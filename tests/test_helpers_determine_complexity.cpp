@@ -4,10 +4,6 @@
 #include <stdexcept>
 #include <vector>
 
-// Assuming the enum ComplexityThreshold and function determine_complexity are
-// declared in a header file included here enum class ComplexityThreshold { O1,
-// OLOGN, ON, ONLOGN, ON2, ON3, O2N, OFACT };
-
 class DetermineComplexityTest : public ::testing::Test {
 protected:
   // Helper function to generate test data

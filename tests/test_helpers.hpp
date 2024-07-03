@@ -28,6 +28,30 @@ enum class Complexity {
  */
 std::string to_string(Complexity complexity);
 
+/**
+ * @brief
+ * Measure the execution time of a lambda function for a given input size.
+ * The lambda function is executed multiple times and the average time is
+ * returned.
+ *
+ * @param setup
+ * Executed before each lambda function execution to prepare the input for the
+ * lambda function.
+ *
+ * @param lambda
+ * The lambda function to measure. This function should take a single size_t for
+ * input size.
+ *
+ * @param input_size
+ * Parameter passed to setup and lambda functions.
+ *
+ * @param repetitions
+ * The number of times to repeat the lambda function for each input size.
+ * The average is calculated from this.
+ *
+ * @return double
+ * The average time taken to execute the lambda function.
+ */
 double measure_execution_time(const std::function<void(size_t)> &setup,
                               const std::function<void(size_t)> &lambda,
                               size_t input_size, size_t repetitions);
@@ -35,15 +59,30 @@ double measure_execution_time(const std::function<void(size_t)> &setup,
 Complexity determine_complexity(const std::vector<size_t> &input_sizes,
                                 const std::vector<double> &times);
 /**
- * @brief Measure the asymptotic time complexity of a function.
+ * @brief This function measures the execution time of a lambda function for a
+ * given input size. The lambda function is executed multiple times and the
+ * average time is returned.
+ *
+ * The setup function is called before each lambda function execution to prepare
+ * the input for the lambda function.
+ *
+ * Time sampling is quite fuzzy and prone to a number of external factors on
+ * where it is run, such as the scheduler, other loads on the machine, the
+ * status of various cache levels. So, the test is run 3 times and the lowest
+ * time is returned.
+ *
+ * Tests should compare the expected value is less than or equal to the next
+ * greatest complexity, effectively setting some limits on the expected time and
+ * failing the test if the underlying code is modified in a way that crosses
+ * that boundary (say, from O(n) to O(n^2)).
  *
  * @param setup
- * A setup function that prepares the input for the lambda function. The setup
- * function should take a single size_t for input size.
+ * The function to run before the lambda function. This function should prepare
+ * the input for the lambda function.
  *
  * @param lambda
- * The lambda function to measure. The lambda function should take a single
- * size_t for input size.
+ * The lambda function to measure. This function should take a single size_t for
+ * input size.
  *
  * @param input_sizes
  * A vector of input sizes to test.
@@ -51,7 +90,7 @@ Complexity determine_complexity(const std::vector<size_t> &input_sizes,
  * @param repetitions
  * The number of times to repeat the lambda function for each input size.
  *
- * @return ComplexityThreshold
+ * @return Complexity, ERROR or Unknown if the complexity cannot be determined.
  */
 Complexity
 measure_time_complexity(const std::function<void(size_t input_size)> &setup,

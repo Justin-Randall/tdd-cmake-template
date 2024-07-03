@@ -2,11 +2,6 @@
 #include <gtest/gtest.h>
 #include <string>
 
-// Assuming the enum ComplexityThreshold and function to_string are declared in
-// a header file included here enum class ComplexityThreshold { O1, OLOGN, ON,
-// ONLOGN, ON2, ON3, O2N, OFACT }; std::string to_string(ComplexityThreshold
-// threshold);
-
 TEST(ComplexityThresholdToStringTest, ConvertsEnumToString) {
   EXPECT_EQ(to_string(Complexity::ERROR), "ERROR");
   EXPECT_EQ(to_string(Complexity::O1), "O(1)");
@@ -20,5 +15,5 @@ TEST(ComplexityThresholdToStringTest, ConvertsEnumToString) {
   EXPECT_EQ(to_string(Complexity::OUnknown), "O(Unknown)");
 
   // Failure case
-  EXPECT_EQ(to_string(static_cast<Complexity>(-1)), "ERROR");
+  EXPECT_EQ(to_string(static_cast<Complexity>(-1)), "Undefined");
 }

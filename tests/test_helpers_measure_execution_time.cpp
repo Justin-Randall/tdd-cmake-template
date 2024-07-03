@@ -4,13 +4,6 @@
 #include <gtest/gtest.h>
 #include <thread>
 
-// Assuming measure_execution_time is declared in a header file included here
-// extern double measure_execution_time(const std::function<void(size_t)>
-// &setup,
-//                                      const std::function<void(size_t)>
-//                                      &lambda, size_t input_size, size_t
-//                                      repetitions);
-
 class MeasureExecutionTimeTest : public ::testing::Test {
 public:
   // Setup function that does nothing

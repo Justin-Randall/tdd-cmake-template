@@ -57,32 +57,6 @@ double measure_execution_time(const std::function<void(size_t)> &setup,
   return average_time;
 }
 
-// Helper function to calculate mean
-double mean(const std::vector<double> &v) {
-  return std::accumulate(v.begin(), v.end(), 0.0) / v.size();
-}
-
-// Helper function to calculate variance
-double variance(const std::vector<double> &v) {
-  double m = mean(v);
-  double var = 0.0;
-  for (double x : v) {
-    var += (x - m) * (x - m);
-  }
-  return var / v.size();
-}
-
-// Helper function to calculate covariance
-double covariance(const std::vector<double> &x, const std::vector<double> &y) {
-  double mean_x = mean(x);
-  double mean_y = mean(y);
-  double cov = 0.0;
-  for (size_t i = 0; i < x.size(); ++i) {
-    cov += (x[i] - mean_x) * (y[i] - mean_y);
-  }
-  return cov / x.size();
-}
-
 // Helper function to perform linear regression and return R^2 value
 double linear_regression(const std::vector<double> &x,
                          const std::vector<double> &y) {
@@ -210,21 +184,6 @@ Complexity determine_complexity(const std::vector<size_t> &input_sizes,
   fits.emplace_back(linear_regression(fact_input_sizes, times),
                     Complexity::ONFactorial);
 
-  std::cout << "Input sizes: ";
-  for (const auto &size : input_sizes) {
-    std::cout << size << " ";
-  }
-  std::cout << "\nTimes: ";
-  for (const auto &time : times) {
-    std::cout << time << " ";
-  }
-  std::cout << "\n";
-
-  std::cout << "R² values: \n";
-  for (const auto &fit : fits) {
-    std::cout << to_string(fit.second) << ": " << fit.first << "\n";
-  }
-
   auto best_fit = std::max_element(
       fits.begin(), fits.end(),
       [](const std::pair<double, Complexity> &a,
@@ -244,8 +203,6 @@ Complexity determine_complexity(const std::vector<size_t> &input_sizes,
         return a.first < b.first;
       });
 
-  std::cout << "Selected complexity: " << to_string(best_fit->second) << "\n";
-
   if (std::isnan(best_fit->first) ||
       best_fit->first == -std::numeric_limits<double>::infinity()) {
     return Complexity::OUnknown;
@@ -261,12 +218,19 @@ measure_time_complexity(const std::function<void(size_t input_size)> &setup,
                         size_t repetitions) {
   std::vector<double> times;
 
-  for (const auto &input_size : input_sizes) {
-    double avg_time =
-        measure_execution_time(setup, lambda, input_size, repetitions);
-    times.push_back(avg_time);
+  // Take three measurements, record the lowest time and return that.
+  Complexity bestComplexity = Complexity::ERROR;
+  for (size_t i = 0; i < 3; ++i) {
+    for (const auto &input_size : input_sizes) {
+      double avg_time =
+          measure_execution_time(setup, lambda, input_size, repetitions);
+      times.push_back(avg_time);
+    }
+    Complexity complexity = determine_complexity(input_sizes, times);
+    if (complexity < bestComplexity) {
+      bestComplexity = complexity;
+    }
   }
 
-  Complexity complexity = determine_complexity(input_sizes, times);
-  return complexity;
+  return bestComplexity;
 }

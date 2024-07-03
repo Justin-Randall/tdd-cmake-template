@@ -173,3 +173,7 @@ Adapting a test framework to existing code, especially with an eye to attempt TD
 There are some other great tools that can be plugged into this framework. Test coverage tracking with OpenCPPCoverage is a reasonably portable way to track how much functional code is covered by tests (it should be 100%). IDEs can read its output to show, in the editor, which lines have not had test coverage (coverage gutters in VSCode, for example).
 
 The most important goal is to have a nice launchpad template to start TDD without having to recreate it from scratch every time.
+
+### Custom time complexity testing
+
+There are some additional headers and sources included here that are commented out in `project_root/tests/CMakeLists.txt` that may be of use to ensure the time complexity in Big-O notation for your code remains as expected as future changes are made. Nobody wants an O(1) method to become O(n^2) unexpectedly and require a bunch of profiling sessions to track down. This makes it easier to let the test suite catch these issues. They should be FAST (on the order of milliseconds), but you will need to supply enough sample runs to ensure provably accurate results over 99% of the time. This is one of those rare occassions that a rare and random false failure is preferable to no coverage.

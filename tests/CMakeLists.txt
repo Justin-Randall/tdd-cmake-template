@@ -12,13 +12,21 @@ set(UNIT_TEST ${PROJECT_NAME}_tests)
 
 add_executable(${UNIT_TEST}
     "test_${PROJECT_NAME}.cpp"
+
+    # ############################################
+    # Comment these to exclude some helper functions
+    # Not required for the project, but useful for testing
+    # things like time complexity and others
+    # defined in test_helpers.hpp By default they are
+    # included in the project so they are tested when
+    # pushed.
     "test_helpers.cpp"
-
-    # "test_helpers_measure_execution_time.cpp"
-    # "test_helpers_to_string_complexity_enum.cpp"
+    "test_helpers_measure_execution_time.cpp"
+    "test_helpers_to_string_complexity_enum.cpp"
     "test_helpers_determine_complexity.cpp"
+    "test_helpers_measure_time_complexity.cpp"
 
-    # "test_helpers_measure_time_complexity.cpp"
+    # ############################################
 )
 
 target_compile_features(${UNIT_TEST} PRIVATE cxx_std_20)
