@@ -229,6 +229,12 @@ Complexity determine_complexity(const std::vector<size_t> &input_sizes,
       fits.begin(), fits.end(),
       [](const std::pair<double, Complexity> &a,
          const std::pair<double, Complexity> &b) {
+        if ((std::isnan(a.first) ||
+             a.first == -std::numeric_limits<double>::infinity()) &&
+            (std::isnan(b.first) ||
+             b.first == -std::numeric_limits<double>::infinity())) {
+          return false; // Prevent invalid comparator
+        }
         if (std::isnan(a.first) ||
             a.first == -std::numeric_limits<double>::infinity())
           return true;

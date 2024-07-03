@@ -107,8 +107,10 @@ TEST_F(DetermineComplexityTest, ComplexityOFACT) {
 }
 
 TEST_F(DetermineComplexityTest, ComplexityInvalid) {
-  auto [times, input_sizes] = generateTestData(
-      static_cast<Complexity>(-1),
-      4); // Need more data points for factorial to be distinguishable
+  // Crafting times and input_sizes to trigger OUnknown
+  std::vector<double> times = {1.0, 2.0, std::nan("1"),
+                               -1.0}; // Deliberate NaN and negative values
+  std::vector<size_t> input_sizes = {1, 2, 3, 4};
+
   EXPECT_EQ(determine_complexity(input_sizes, times), Complexity::OUnknown);
 }
