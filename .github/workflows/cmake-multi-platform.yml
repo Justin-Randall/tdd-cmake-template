@@ -87,7 +87,7 @@ jobs:
       if: runner.os == 'Linux' && ${{ matrix.build_type }} == 'Debug' && ${{ matrix.c_compiler }} == 'gcc'
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
-        filename: ${{ steps.strings.outputs.build-output-dir }}/coverage/coverage.xml
+        filename: ${{ steps.strings.outputs.build-output-dir }}/coverage/*.xml
         badge: true
         fail_below_min: true
         format: markdown
