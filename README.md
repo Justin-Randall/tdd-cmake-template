@@ -1,5 +1,7 @@
 ![Build Status](https://github.com/Justin-Randall/tdd-cmake-template/actions/workflows/cmake-multi-platform.yml/badge.svg)
 
+[![codecov](https://codecov.io/github/Justin-Randall/tdd-cmake-template/graph/badge.svg?token=4HYUF98OJ4)](https://codecov.io/github/Justin-Randall/tdd-cmake-template)
+
 # Practical Test-Driven Development (TDD) in C++ with CMake
 
 I am going to break from some of the eclectic bag of tricks to talk about making a (hopefully) helpful template for creating a TDD template for C++ code using [CMake](https://cmake.org/) and [Google Test](https://github.com/google/googletest). Yes, I know, it's like discussing the joy of flossing, but bear with me. CMake, its built-in test targets and even dependency management is now as mature as a fine wine (or not so fine cheese).
