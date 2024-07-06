@@ -80,11 +80,11 @@ jobs:
       run: ctest --build-config ${{ matrix.build_type }}
 
     - name: Coverage
-      if: runner.os == 'Linux' && ${{ matrix.build_type }} == 'Debug'
+      if: runner.os == 'Linux' && ${{ matrix.build_type }} == 'Debug' && ${{ matrix.c_compiler }} == 'gcc'
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} --target coverage
 
     - name: Upload coverage to Codecov (Linux only)
-      if: runner.os == 'Linux'
+      if: runner.os == 'Linux' && ${{ matrix.build_type }} == 'Debug' && ${{ matrix.c_compiler }} == 'gcc'
       uses: codecov/codecov-action@v4.0.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
