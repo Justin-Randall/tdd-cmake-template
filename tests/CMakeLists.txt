@@ -46,17 +46,10 @@ find_program(LCOV_BINARY lcov)
 find_program(GENHTML_BINARY genhtml)
 find_program(GCOVR_BINARY gcovr)
 
-# Create the coverage_check.cmake file
-file(WRITE ${CMAKE_BINARY_DIR}/coverage_check.cmake "
-if(NOT \${DEBUG_BUILD_TYPE} STREQUAL \"Debug\")
-    message(FATAL_ERROR \"Coverage can only be generated for Debug builds.\")
-endif()
-")
-
 # Define the coverage target unconditionally
 add_custom_target(coverage
-    COMMAND ${CMAKE_COMMAND} -DDEBUG_BUILD_TYPE=${CMAKE_BUILD_TYPE} -P ${CMAKE_BINARY_DIR}/coverage_check.cmake
-    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target ALL_BUILD
+    DEPENDS ${UNIT_TEST}
+    COMMAND ${UNIT_TEST}
     COMMENT "Run coverage report and tests"
     WORKING_DIRECTORY ${CMAKE_TEST_DIRECTORY}
 )
