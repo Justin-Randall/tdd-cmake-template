@@ -83,27 +83,11 @@ jobs:
       if: runner.os == 'Linux' && ${{ matrix.build_type }} == 'Debug' && ${{ matrix.c_compiler }} == 'gcc'
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} --target coverage
 
-    - name: Code Coverage Summary
+    - name: Upload coverage to Codecov (Linux only)
       if: runner.os == 'Linux' && ${{ matrix.build_type }} == 'Debug' && ${{ matrix.c_compiler }} == 'gcc'
-      uses: irongut/CodeCoverageSummary@v1.3.0
+      uses: codecov/codecov-action@v4.0.1
       with:
-        filename: ${{ steps.strings.outputs.build-output-dir }}/coverage/*.xml
-        badge: true
-        fail_below_min: true
-        format: markdown
-        hide_branch_rate: false
-        hide_complexity: true
-        indicators: true
-        output: both
-        thresholds: '60 80'  
-
-    #############################
-    # Removing codecov.io dependency. Should not need an account to get basic reporting on coverage
-    # - name: Upload coverage to Codecov (Linux only)
-    #   if: runner.os == 'Linux' && ${{ matrix.build_type }} == 'Debug' && ${{ matrix.c_compiler }} == 'gcc'
-    #   uses: codecov/codecov-action@v4.0.1
-    #   with:
-    #     token: ${{ secrets.CODECOV_TOKEN }}
-    #     files: ${{ steps.strings.outputs.build-output-dir }}/coverage/lcov.info
-    #     flags: unittests
-    #     name: codecov-umbrella
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ${{ steps.strings.outputs.build-output-dir }}/coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
