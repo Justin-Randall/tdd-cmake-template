@@ -57,7 +57,7 @@ jobs:
     # Need to generate useful coverage report files
     - name: Install dependencies on Ubuntu
       if: runner.os == 'Linux'
-      run: sudo apt-get update && sudo apt-get install -y lcov gcov gcovr
+      run: sudo apt-get update && sudo apt-get install -y lcov gcovr
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
