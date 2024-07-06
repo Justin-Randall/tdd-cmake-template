@@ -85,8 +85,9 @@ jobs:
 
     - name: Upload coverage to Codecov (Linux only)
       if: runner.os == 'Linux'
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4.0.1
       with:
+        token: ${{ secrets.CODECOV_TOKEN }}
         files: ${{ steps.strings.outputs.build-output-dir }}/coverage/lcov.info
         flags: unittests
         name: codecov-umbrella
