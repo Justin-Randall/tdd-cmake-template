@@ -76,6 +76,14 @@ if(OpenCppCoverage_BINARY)
         COMMAND ${OpenCppCoverage_BINARY} --quiet --export_type cobertura:${CMAKE_SOURCE_DIR}/build/coverage.xml --cover_children --sources tdd-cmake-template --excluded_modules system32 --excluded_sources build\\_deps --excluded_sources googletest\\include\\gtest -- ${TEST_COMMAND_LINE_OPTIONS}
         COMMENT "Run OpenCppCoverage"
     )
+
+    add_custom_command(
+        TARGET coverage
+        COMMAND ${CMAKE_COMMAND} -E echo "Checking coverage percentage"
+        COMMAND powershell.exe -File ${CMAKE_SOURCE_DIR}/scripts/check_coverage.ps1 -coverageFile ${CMAKE_SOURCE_DIR}/build/coverage.xml -threshold ${TEST_COVERAGE_THRESHOLD}
+        COMMENT "Capture coverage percentage"
+    )
+
 elseif(GCOV_BINARY AND LCOV_BINARY AND GENHTML_BINARY AND GCOVR_BINARY)
     # Add coverage flags
     target_compile_options(${UNIT_TEST} PRIVATE --coverage -g -O0)
