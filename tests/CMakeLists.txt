@@ -48,6 +48,7 @@ find_program(GCOVR_BINARY gcovr)
 
 # Define the coverage target unconditionally
 add_custom_target(coverage
+    ALL
     DEPENDS ${UNIT_TEST}
     COMMAND ${UNIT_TEST}
     COMMENT "Run coverage report and tests"
