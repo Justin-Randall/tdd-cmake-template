@@ -219,7 +219,7 @@ measure_time_complexity(const std::function<void(size_t input_size)> &setup,
   std::vector<double> times;
 
   // Take three measurements, record the lowest time and return that.
-  Complexity bestComplexity = Complexity::ERROR;
+  Complexity bestComplexity = Complexity::OUnknown;
   for (size_t i = 0; i < 3; ++i) {
     for (const auto &input_size : input_sizes) {
       double avg_time =

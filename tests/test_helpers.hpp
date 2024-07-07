@@ -98,4 +98,7 @@ measure_time_complexity(const std::function<void(size_t input_size)> &setup,
                         const std::vector<size_t> &input_sizes,
                         size_t repetitions = 10);
 
+double linear_regression(const std::vector<double> &x,
+                         const std::vector<double> &y);
+
 #endif // _INCLUDED_test_helpers_hpp

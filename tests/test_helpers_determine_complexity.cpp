@@ -110,3 +110,25 @@ TEST_F(DetermineComplexityTest, ComplexityInvalid) {
 
   EXPECT_EQ(determine_complexity(input_sizes, times), Complexity::OUnknown);
 }
+
+TEST_F(DetermineComplexityTest, ComplexityWithNonPositiveValues) {
+  // Test with a non-positive value in input_sizes
+  std::vector<size_t> input_sizes = {1, 2, 0,
+                                     3}; // includes 0 which is non-positive
+  std::vector<double> times = {1.0, 2.0, 0.5, 3.0};
+
+  // The presence of a non-positive value should make the O(log n) fit invalid
+  Complexity complexity = determine_complexity(input_sizes, times);
+
+  // Since log n can't be determined, it should skip the O(log n) complexity
+  // The test here expects the best fit, which should not be OLogN
+  EXPECT_NE(complexity, Complexity::OLogN);
+}
+
+TEST_F(DetermineComplexityTest, LinearRegression) {
+  // Test linear regression with an empty x vector and non-empty y vector
+  std::vector<double> x = {};
+  std::vector<double> y = {1.0, 2.0, 3.0, 4.0, 5.0};
+  const auto result = linear_regression(x, y);
+  EXPECT_EQ(result, -std::numeric_limits<double>::infinity());
+}
