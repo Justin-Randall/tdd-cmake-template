@@ -69,11 +69,15 @@ add_custom_target(coverage
     WORKING_DIRECTORY ${CMAKE_TEST_DIRECTORY}
 )
 
+string(REPLACE "/" "\\" OPEN_CPP_COVERAGE_SOURCE_DIR ${CMAKE_SOURCE_DIR})
+
 # Conditional coverage report commands for Debug build
 if(OpenCppCoverage_BINARY)
     add_custom_command(
         TARGET coverage
-        COMMAND ${OpenCppCoverage_BINARY} --quiet --export_type cobertura:${CMAKE_SOURCE_DIR}/build/coverage.xml --cover_children --sources tdd-cmake-template --excluded_modules system32 --excluded_sources build\\_deps --excluded_sources googletest\\include\\gtest -- ${TEST_COMMAND_LINE_OPTIONS}
+
+        # string(REPLACE "/" "\\" OPEN_CPP_COVERAGE_SOURCE_DIR ${CMAKE_SOURCE_DIR})
+        COMMAND ${OpenCppCoverage_BINARY} --quiet --export_type cobertura:${CMAKE_SOURCE_DIR}/build/coverage.xml --cover_children --sources ${OPEN_CPP_COVERAGE_SOURCE_DIR} --excluded_modules system32 --excluded_sources build\\_deps --excluded_sources googletest\\include\\gtest -- ${TEST_COMMAND_LINE_OPTIONS}
         COMMENT "Run OpenCppCoverage"
     )
 
