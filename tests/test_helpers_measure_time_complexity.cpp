@@ -1,19 +1,8 @@
 #include "test_helpers.hpp"
 #include <gtest/gtest.h>
 
-class MeasureTimeComplexityTest : public ::testing::Test {
-protected:
-  void SetUp() override {
-    // Setup code if needed
-  }
-
-  void TearDown() override {
-    // Teardown code if needed
-  }
-};
-
 // Test case for constant time complexity O(1)
-TEST_F(MeasureTimeComplexityTest, ConstantTimeComplexity) {
+TEST(MeasureTimeComplexityTest, ConstantTimeComplexity) {
   auto setup = [](size_t input_size) {};
   auto lambda = [](size_t input_size) {
     std::this_thread::yield();
@@ -27,7 +16,7 @@ TEST_F(MeasureTimeComplexityTest, ConstantTimeComplexity) {
 }
 
 // Test case for logarithmic time complexity O(log n)
-TEST_F(MeasureTimeComplexityTest, LogarithmicTimeComplexity) {
+TEST(MeasureTimeComplexityTest, LogarithmicTimeComplexity) {
   auto setup = [](size_t input_size) {};
   auto lambda = [](size_t input_size) {
     for (size_t i = 1; i < input_size; i *= 2) {
@@ -43,7 +32,7 @@ TEST_F(MeasureTimeComplexityTest, LogarithmicTimeComplexity) {
 }
 
 // Test case for linear time complexity O(n)
-TEST_F(MeasureTimeComplexityTest, LinearTimeComplexity) {
+TEST(MeasureTimeComplexityTest, LinearTimeComplexity) {
   auto setup = [](size_t input_size) {};
   auto lambda = [](size_t input_size) {
     for (size_t i = 0; i < input_size; ++i) {
@@ -59,7 +48,7 @@ TEST_F(MeasureTimeComplexityTest, LinearTimeComplexity) {
 }
 
 // Test case for quadratic time complexity O(n^2)
-TEST_F(MeasureTimeComplexityTest, QuadraticTimeComplexity) {
+TEST(MeasureTimeComplexityTest, QuadraticTimeComplexity) {
   auto setup = [](size_t input_size) {};
   auto lambda = [](size_t input_size) {
     for (size_t i = 0; i < input_size; ++i) {
@@ -75,7 +64,7 @@ TEST_F(MeasureTimeComplexityTest, QuadraticTimeComplexity) {
 }
 
 // Test case for cubic time complexity O(n^3)
-TEST_F(MeasureTimeComplexityTest, CubicTimeComplexity) {
+TEST(MeasureTimeComplexityTest, CubicTimeComplexity) {
   auto setup = [](size_t input_size) {};
   auto lambda = [](size_t input_size) {
     for (size_t i = 0; i < input_size; ++i) {

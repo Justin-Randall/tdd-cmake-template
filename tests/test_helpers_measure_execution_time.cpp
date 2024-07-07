@@ -4,17 +4,13 @@
 #include <gtest/gtest.h>
 #include <thread>
 
-class MeasureExecutionTimeTest : public ::testing::Test {
-public:
-};
-
-TEST_F(MeasureExecutionTimeTest, MeasuresCorrectAverageTime) {
+TEST(MeasureExecutionTimeTest, MeasuresCorrectAverageTime) {
   size_t input_size = 0; // Not used in NoOpSetup or SleepLambda
   size_t repetitions = 5;
-  double measured_time =
-      measure_execution_time([](size_t){},
-                             [](size_t){std::this_thread::sleep_for(std::chrono::milliseconds(1));},
-                             input_size, repetitions);
+  double measured_time = measure_execution_time(
+      [](size_t) {},
+      [](size_t) { std::this_thread::sleep_for(std::chrono::milliseconds(1)); },
+      input_size, repetitions);
 
   // Allow some margin for error in timing
   double expected_time_per_call = 0.001; // 10ms in seconds
