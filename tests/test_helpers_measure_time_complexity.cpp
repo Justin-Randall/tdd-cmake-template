@@ -3,8 +3,8 @@
 
 // Test case for constant time complexity O(1)
 TEST(MeasureTimeComplexityTest, ConstantTimeComplexity) {
-  auto setup = [](size_t input_size) {};
-  auto lambda = [](size_t input_size) {
+  auto setup = [](size_t) {};
+  auto lambda = [](size_t) {
     std::this_thread::yield();
     return;
   };
@@ -17,7 +17,7 @@ TEST(MeasureTimeComplexityTest, ConstantTimeComplexity) {
 
 // Test case for logarithmic time complexity O(log n)
 TEST(MeasureTimeComplexityTest, LogarithmicTimeComplexity) {
-  auto setup = [](size_t input_size) {};
+  auto setup = [](size_t) {};
   auto lambda = [](size_t input_size) {
     for (size_t i = 1; i < input_size; i *= 2) {
       std::this_thread::yield();
@@ -33,7 +33,7 @@ TEST(MeasureTimeComplexityTest, LogarithmicTimeComplexity) {
 
 // Test case for linear time complexity O(n)
 TEST(MeasureTimeComplexityTest, LinearTimeComplexity) {
-  auto setup = [](size_t input_size) {};
+  auto setup = [](size_t) {};
   auto lambda = [](size_t input_size) {
     for (size_t i = 0; i < input_size; ++i) {
       std::this_thread::yield();
@@ -49,7 +49,7 @@ TEST(MeasureTimeComplexityTest, LinearTimeComplexity) {
 
 // Test case for quadratic time complexity O(n^2)
 TEST(MeasureTimeComplexityTest, QuadraticTimeComplexity) {
-  auto setup = [](size_t input_size) {};
+  auto setup = [](size_t) {};
   auto lambda = [](size_t input_size) {
     for (size_t i = 0; i < input_size; ++i) {
       for (size_t j = 0; j < input_size; ++j) {
@@ -65,7 +65,7 @@ TEST(MeasureTimeComplexityTest, QuadraticTimeComplexity) {
 
 // Test case for cubic time complexity O(n^3)
 TEST(MeasureTimeComplexityTest, CubicTimeComplexity) {
-  auto setup = [](size_t input_size) {};
+  auto setup = [](size_t) {};
   auto lambda = [](size_t input_size) {
     for (size_t i = 0; i < input_size; ++i) {
       for (size_t j = 0; j < input_size; ++j) {
