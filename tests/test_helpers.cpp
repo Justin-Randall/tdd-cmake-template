@@ -43,7 +43,7 @@ double measure_execution_time(const std::function<void(size_t)> &setup,
   using namespace std::chrono;
   double total_time = 0.0;
 
-  for (int i = 0; i < repetitions; ++i) {
+  for (size_t i = 0; i < repetitions; ++i) {
     setup(input_size);
 
     auto start = high_resolution_clock::now();
