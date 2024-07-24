@@ -9,7 +9,7 @@ Saves the hassle of:
 - Writing `./CMakeLists.txt` to add `./tests/`
 - Writing `./tests/CMakeLists.txt` to get prerequisites
   - Google Test
-  - Check for coverage binaries like `lcov` or `OpenCppCoverage`
+  - Check for coverage binaries like [`lcov`](https://github.com/linux-test-project/lcov) or [`OpenCppCoverage`](https://github.com/OpenCppCoverage/OpenCppCoverage)
 - Setting up a baseline TDD starting point
 - Generating coverage reports
 - Setting minimum coverage thresholds for passing builds
@@ -58,11 +58,13 @@ add_subdirectory(tests)
 
 and definitely dial `TEST_COVERAGE_THRESHOLD` down.
 
-If the local development environment includes lcov or OpenCppCoverage, that threshold will be checked and if coverage is below it, the build will fail. Always run the "coverage" target in the IDE before committing to source control.
+If the local development environment includes [lcov](https://github.com/linux-test-project/lcov) or [OpenCppCoverage](https://github.com/OpenCppCoverage/OpenCppCoverage), that threshold will be checked and if coverage is below it, the build will fail. Always run the "coverage" target in the IDE before committing to source control.
 
 ## GoogleTest and Coverage
 
-CMake will detect the platform and whether or not gcovr/lcov/genhtml are present. For Windows, it will check for OpenCppCoverage.exe. Since this is hosted on GitHub, there is also a workflow that will install necessary coverage tools and generate coverage reports. It DOES use [CodeCov.io](https://codecov.io). For single dev accounts, it is free to use. Some of the ShieldIO workflows that I used to leverage stopped working sometime in the last couple of months.
+CMake will detect the platform and whether or not [gcovr](https://github.com/gcovr/gcovr)/[lcov](https://github.com/linux-test-project/lcov)/genhtml are present. For Windows, it will check for [OpenCppCoverage.exe](https://github.com/OpenCppCoverage/OpenCppCoverage). Since this is hosted on GitHub, there is also a workflow that will install necessary coverage tools and generate coverage reports. It DOES use [CodeCov.io](https://codecov.io). For single dev accounts, it is free to use. Some of the ShieldIO workflows that I used to leverage stopped working sometime in the last couple of months.
+
+The build system assumes coverage tools are administratively installed. Since the tools are also available on GitHub, this may change in the future to download, build and use the locally built-versions.
 
 ## Custom time complexity testing
 
