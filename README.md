@@ -71,3 +71,7 @@ If the build complains when running coverage, ensure lcov-2.0 or above are insta
 ## Custom time complexity testing
 
 There are some additional headers and sources included here that can be commented out in `project_root/tests/CMakeLists.txt` that may be of use to ensure the time complexity in Big-O notation for your code remains as expected as future changes are made. Nobody wants an O(1) method to become O(n^2) unexpectedly and require a bunch of profiling sessions to track down. This makes it easier to let the test suite catch these issues. They should be FAST (on the order of milliseconds), but you will need to supply enough sample runs to ensure provably accurate results over 99% of the time. This is one of those rare occasions that a rare and random false failure is preferable to no coverage.
+
+## New
+
+Adding some workflow support to automatically run tests before checking changes into source control. This allows a developer to iterate constantly and not worry about forgetting to run tests before submitting changes.
