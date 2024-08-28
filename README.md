@@ -6,6 +6,7 @@
 
 Saves the hassle of:
 
+- Setting up pre-commit hooks to ensure code builds, passes tests and meets coverage thresholds
 - Writing `./CMakeLists.txt` to add `./tests/`
 - Writing `./tests/CMakeLists.txt` to get prerequisites
   - Google Test
@@ -72,8 +73,6 @@ If the build complains when running coverage, ensure lcov-2.0 or above are insta
 
 There are some additional headers and sources included here that can be commented out in `project_root/tests/CMakeLists.txt` that may be of use to ensure the time complexity in Big-O notation for your code remains as expected as future changes are made. Nobody wants an O(1) method to become O(n^2) unexpectedly and require a bunch of profiling sessions to track down. This makes it easier to let the test suite catch these issues. They should be FAST (on the order of milliseconds), but you will need to supply enough sample runs to ensure provably accurate results over 99% of the time. This is one of those rare occasions that a rare and random false failure is preferable to no coverage.
 
-## New
+## Source control workflow
 
-Adding some workflow support to automatically run tests before checking changes into source control. This allows a developer to iterate constantly and not worry about forgetting to run tests before submitting changes.
-
-...
+In `scripts/source_control/githooks` is a precommit script that checks that code builds, tests pass, and coverage meets a minumum threshold. This automates away the manual processes that are prone to someone forgetting one step in a growing list of things they need on a check-list before committing changes. It is currently git-oriented. It can be refactored to also handle other source control systems that allow pre-commit checks like perforce (Helix-Core client extensions in Lua, for example).
